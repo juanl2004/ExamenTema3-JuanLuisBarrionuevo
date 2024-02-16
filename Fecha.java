@@ -10,15 +10,15 @@ public class Fecha {
 	/**
 	 * Nos guarda el valor del dia.
 	 */
-	private int d; // d�a
+	private int diaFecha; // d�a
 	/**
 	 * Nos guarda el valor del mes.
 	 */
-	private int m; // mes
+	private int mesFecha; // mes
 	/**
 	 * Nos guarda el valor del año.
 	 */
-	private int a; // a�o
+	private int anio; // a�o
 
 	/**
 	 * Esta funcion fecha esta vacia y no tiene ningun parametro de entrada.
@@ -35,9 +35,9 @@ public class Fecha {
 	 * @param anio valor de año introducido por parametro
 	 */
 	public Fecha(int dia, int mes, int anio) {
-		this.d = dia;
-		this.m = mes;
-		this.a = anio;
+		this.diaFecha = dia;
+		this.mesFecha = mes;
+		this.anio = anio;
 	}
 
 	/**
@@ -51,26 +51,29 @@ public class Fecha {
 	 * @return Nos devuelve el día, el mes y el año correcto.
 	 */
 	public boolean fechaCorrecta() {
-		boolean diaCorrecto, mesCorrecto, anioCorrecto;
-		anioCorrecto = a > 0;
-		mesCorrecto = m >= 1 && m <= 12;
-		boolean diaMayor1 = d >= 1;
-		switch (m) {
+		boolean diaCorrecto;
+		boolean mesCorrecto;
+		boolean anioCorrecto;
+		
+		anioCorrecto = anio > 0;
+		mesCorrecto = mesFecha >= 1 && mesFecha <= 12;
+		boolean diaMayor1 = diaFecha >= 1;
+		switch (mesFecha) {
 		case 2:
 			if (esBisiesto()) {
-				diaCorrecto = diaMayor1 && d <= 29;
+				diaCorrecto = diaMayor1 && diaFecha <= 29;
 			} else {
-				diaCorrecto = diaMayor1 && d <= 28;
+				diaCorrecto = diaMayor1 && diaFecha <= 28;
 			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			diaCorrecto = diaMayor1 && d <= 30;
+			diaCorrecto = diaMayor1 && diaFecha <= 30;
 			break;
 		default:
-			diaCorrecto = diaMayor1 && d <= 31;
+			diaCorrecto = diaMayor1 && diaFecha <= 31;
 		}
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
@@ -82,8 +85,7 @@ public class Fecha {
 	 *         bisiesto o no.
 	 */
 	private boolean esBisiesto() {
-		boolean esBisiesto = (a % 4 == 0 && a % 100 != 0 || a % 400 == 0);
-		return esBisiesto;
+		return anio % 4 == 0 && anio % 100 != 0 || anio % 400 == 0;
 	}
 
 	/**
@@ -93,13 +95,13 @@ public class Fecha {
 	 * @return Nos devuelve la fecha de forma bonita con sus guiones, etc.
 	 */
 	public void nextDay() {
-		d++;
+		diaFecha++;
 		if (!fechaCorrecta()) {
-			d = 1;
-			m++;
+			diaFecha = 1;
+			mesFecha++;
 			if (!fechaCorrecta()) {
-				m = 1;
-				a++;
+				mesFecha = 1;
+				anio++;
 			}
 		}
 	}
@@ -109,15 +111,17 @@ public class Fecha {
 	 * Incrementando un 0 al principio si el número es menor de 10.
 	 */
 	public String toString() {
-		if (d < DIEZ && m < 10) {
-			return "0" + d + "-0" + m + "-" + a;
-		} else if (d < 10 && m >= 10) {
-			return "0" + d + "-" + m + "-" + a;
-		} else if (d >= 10 && m < 10) {
-			return d + "-0" + m + "-" + a;
+		String fecha;
+		if (diaFecha < DIEZ && mesFecha < 10) {
+			fecha = "0" + diaFecha + "-0" + mesFecha + "-" + anio;
+		} else if (diaFecha < 10 && mesFecha >= 10) {
+			fecha = "0" + diaFecha + "-" + mesFecha + "-" + anio;
+		} else if (diaFecha >= 10 && mesFecha < 10) {
+			fecha = diaFecha + "-0" + mesFecha + "-" + anio;
 		} else {
-			return d + "-" + m + "-" + a;
+			fecha = diaFecha + "-" + mesFecha + "-" + anio;
 		}
+	return fecha;
 	}
 
 }

@@ -6,6 +6,7 @@ package fecha;
  * fecha correcta.
  */
 public class Fecha {
+	public static final int DIEZ = 10;
 	/**
 	 * Nos guarda el valor del dia.
 	 */
@@ -53,22 +54,23 @@ public class Fecha {
 		boolean diaCorrecto, mesCorrecto, anioCorrecto;
 		anioCorrecto = a > 0;
 		mesCorrecto = m >= 1 && m <= 12;
+		boolean diaMayor1 = d >= 1;
 		switch (m) {
 		case 2:
 			if (esBisiesto()) {
-				diaCorrecto = d >= 1 && d <= 29;
+				diaCorrecto = diaMayor1 && d <= 29;
 			} else {
-				diaCorrecto = d >= 1 && d <= 28;
+				diaCorrecto = diaMayor1 && d <= 28;
 			}
 			break;
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			diaCorrecto = d >= 1 && d <= 30;
+			diaCorrecto = diaMayor1 && d <= 30;
 			break;
 		default:
-			diaCorrecto = d >= 1 && d <= 31;
+			diaCorrecto = diaMayor1 && d <= 31;
 		}
 		return diaCorrecto && mesCorrecto && anioCorrecto;
 	}
@@ -90,7 +92,7 @@ public class Fecha {
 	 * 
 	 * @return Nos devuelve la fecha de forma bonita con sus guiones, etc.
 	 */
-	public void diaSiguiente() {
+	public void nextDay() {
 		d++;
 		if (!fechaCorrecta()) {
 			d = 1;
@@ -107,7 +109,7 @@ public class Fecha {
 	 * Incrementando un 0 al principio si el número es menor de 10.
 	 */
 	public String toString() {
-		if (d < 10 && m < 10) {
+		if (d < DIEZ && m < 10) {
 			return "0" + d + "-0" + m + "-" + a;
 		} else if (d < 10 && m >= 10) {
 			return "0" + d + "-" + m + "-" + a;
